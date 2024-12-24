@@ -1,4 +1,7 @@
-# Monitoring-soil-moisture-value-in-Thing-speak-cloud
+### NAME : NATHER NABEEL S.A.C
+### REG NO : 2490091
+
+# Monitoring soil moisture value in Thing speak cloud
 # Uploading soil moisture sensor data in Thing Speak cloud
 
 # AIM:
@@ -84,8 +87,73 @@ Prototype and build IoT systems without setting up servers or developing web sof
 ![image](https://github.com/user-attachments/assets/5beaf86c-0d5d-4b99-9c22-bb0351f487ab)
 
 # PROGRAM:
+
+
+#include <WiFi.h>
+#include "ThingSpeak.h" 
+#define Soil_Moisture 34
+char ssid[] = "OnePlus 11R";    
+char pass[] = "qwertyui";  
+int keyIndex = 0;            
+WiFiClient  client;
+
+unsigned long myChannelNumber = 2792152;
+const int ChannelField = 1; 
+const char * myWriteAPIKey = "UB3PHLWYQX7F4BDZ";
+
+const int airValue = 4095;      
+const int waterValue = 0;
+int percentage =0;
+void setup() {
+  Serial.begin(115200);  
+  pinMode(Soil_Moisture, INPUT);
+  WiFi.mode(WIFI_STA);   
+  ThingSpeak.begin(client); 
+}
+
+void loop()
+{
+ if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      WiFi.begin(ssid, pass);
+      Serial.print(".");
+      delay(5000);
+    }
+    Serial.println("\nConnected.");
+  }
+
+ /* Soil MoistureSensor */
+  int Soil_Value = analogRead(Soil_Moisture);
+  percentage = map(Soil_Value, airValue, waterValue, 0, 100);
+
+ 
+  percentage = constrain(percentage, 0, 100);
+  Serial.println("Soil moisture percentage");
+  Serial.println(percentage);
+  ThingSpeak.writeField(myChannelNumber, ChannelField, percentage, myWriteAPIKey);
+  
+   delay(5000); 
+}
+
+
 # CIRCUIT DIAGRAM:
+
+
+
+![image](https://github.com/user-attachments/assets/6f4ea945-b5e0-4e15-8d21-56bf20017d94)
+
 # OUTPUT:
+
+![image](https://github.com/user-attachments/assets/cef7cd08-fe92-4185-8ed1-fb293d13566d)
+
+
+![image](https://github.com/user-attachments/assets/8221ce33-b179-46a6-b0a5-eda2cc85d5f8)
+
+
 # RESULT:
 Thus the soil moisture values are updated in the Thing speak cloud using ESP32 controller.
 
