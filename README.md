@@ -1,8 +1,8 @@
 ### NAME : NATHER NABEEL S.A.C
 ### REG NO : 2490091
-
+# EXP : 5
 # Monitoring soil moisture value in Thing speak cloud
-# Uploading soil moisture sensor data in Thing Speak cloud
+
 
 # AIM:
 To monitor the soil moisture value in the Thing speak cloud using soil moisture sensor and ESP32 controller.
